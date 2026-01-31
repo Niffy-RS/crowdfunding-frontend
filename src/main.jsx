@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import HomePage from "./pages/HomePage.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
 import FundraiserPage from "./pages/FundraiserPage.jsx";
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
       element: <NavBar />,
       children: [
           { path: "/", element: <HomePage /> },
+          { path: "/login", element: <LoginPage />},
           { path: "/about", element: <AboutPage /> },
           { path: "/contact", element: <ContactPage /> },
           { path: "/fundraiser/:id", element: <FundraiserPage /> },
