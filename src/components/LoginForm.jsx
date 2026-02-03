@@ -31,7 +31,7 @@ function LoginForm() {
         setAuth({
           token: response.token,
         });
-        navigate("/");
+        navigate("/user");
       });
     }
   };
