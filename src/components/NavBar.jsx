@@ -16,15 +16,14 @@ function NavBar() {
     <div className="navbar">
       <nav>
         <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-        <Link to="/contact">Contact</Link>
+        <Link to="/signup">Start Your TeamRazr</Link>
         {auth.token ? (
-          <div>
-          <Link to="/user">Your Profile</Link>
+          <>
+          <Link to="/user">Dashboard</Link>
           <Link to="/" onClick={handleLogout}>
-            Log Out
+            Logout
           </Link>
-          </div>
+          </>
           ) : (
           <Link to="/login">Login</Link> 
         )}
