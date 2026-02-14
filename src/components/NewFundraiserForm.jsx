@@ -33,8 +33,9 @@ function NewFundraiserForm() {
                 credentials.image,
                 credentials.acknowledgement
             ).then((response) => {
+                const userId = auth.user_id || window.localStorage.getItem("user_id");
                 // Successful capture redirects to dashboard
-                navigate("/user");
+                navigate(`/users/${userId}`);
             }).catch((err) => {
                 console.error("DATA_ENTRY_FAILURE: Protocol not established.");
             });

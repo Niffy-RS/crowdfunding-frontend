@@ -32,7 +32,8 @@ function NewPledgeForm(props) {
                 credentials.anonymous,  
                 credentials.fundraiser
             ).then((response) => {
-                navigate("/user");
+                const userId = auth.user_id || window.localStorage.getItem("user_id");
+                navigate(`/users/${userId}`);
             }).catch((err) => {
                 console.error("ALLOCATION_FAILURE: Connection severed.");
             });
