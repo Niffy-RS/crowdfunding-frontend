@@ -3,7 +3,7 @@ import NewPledgeForm from "../components/NewPledgeForm";
 
 function NewPledgePage() {
   const { id } = useParams();
-  return <NewPledgeForm projectID={id} />;
+  return <NewPledgeForm fundraiserId={id} />;
 }
 
 export default NewPledgePage;
