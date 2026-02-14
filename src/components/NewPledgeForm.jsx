@@ -1,22 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react"; // Added useEffect
 import { useParams, useNavigate } from "react-router-dom";
-// 1. ADD: Import your auth hook
 import useAuth from "../hooks/use-auth";
 import postPledge from "../api/post-pledge";
 import "./Forms.css";
 
 function NewPledgeForm() {
     const navigate = useNavigate();
-    // 2. ADD: Use useParams to grab the ID from the URL (e.g., /pledge/5)
     const { id } = useParams();
-    // 3. ADD: Initialize auth context
     const { auth } = useAuth();
+
+    // 1. COMPLIANCE CHECK: Redirect if not logged in
+    useEffect(() => {
+        if (!auth.token && !window.localStorage.getItem("token")) {
+            navigate("/login");
+        }
+    }, [auth, navigate]);
 
     const [credentials, setCredentials] = useState({
         amount: "",
         comment: "",
         anonymous: false,
-        // 4. SYNC: Map the URL 'id' to the fundraiser field
         fundraiser: id || ""
     });
 
@@ -31,19 +34,20 @@ function NewPledgeForm() {
     const handleSubmit = (event) => {
         event.preventDefault();
 
+        // Ensure amount is handled as a number for the backend
         if (credentials.amount && credentials.fundraiser) {
             postPledge(
                 credentials.amount,
                 credentials.comment,
                 credentials.anonymous,
                 credentials.fundraiser
-            ).then((response) => {
-                // 5. REDIRECT: Use the ID from auth or fallback to localStorage
+            ).then(() => {
                 const userId = auth?.user_id || window.localStorage.getItem("user_id");
+                // Successful redirection to Personal Dashboard
                 navigate(`/users/${userId}`);
             }).catch((err) => {
-                console.error("ALLOCATION_FAILURE: Connection severed.", err);
-                alert("Transfer failed. Ensure your session is still active.");
+                console.error("ALLOCATION_FAILURE:", err);
+                alert("Transfer failed. Please ensure all data points are objective.");
             });
         }
     };
@@ -53,7 +57,40 @@ function NewPledgeForm() {
             <h2 className="form-title">Asset Allocation Agreement</h2>
 
             <form onSubmit={handleSubmit}>
-                {/* ... Amount and Comment fields remain the same ... */}
+                {/* 2. THE MISSING INPUTS: Ensure these are visible */}
+                <div className="form-section">
+                    <label className="form-label" htmlFor="amount">Relinquishment Amount ($):</label>
+                    <input
+                        className="form-input"
+                        type="number"
+                        id="amount"
+                        placeholder="0.00"
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+
+                <div className="form-section">
+                    <label className="form-label" htmlFor="comment">HR Approved Sentiment (Comment):</label>
+                    <textarea
+                        className="form-input"
+                        id="comment"
+                        placeholder="PROVIDE OBJECTIVE DATA ONLY"
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+
+                <div className="form-section">
+                    <input
+                        type="checkbox"
+                        id="anonymous"
+                        onChange={handleChange}
+                    />
+                    <label className="form-label" htmlFor="anonymous" style={{ marginLeft: "10px" }}>
+                        Mask Identity (Anonymous)
+                    </label>
+                </div>
 
                 <div className="form-section">
                     <label className="form-label" htmlFor="fundraiser">Designated Asset ID:</label>
@@ -62,8 +99,7 @@ function NewPledgeForm() {
                         type="text"
                         id="fundraiser"
                         value={credentials.fundraiser}
-                        placeholder="RETRIEVING_ID..."
-                        readOnly // Protocol requirement: don't let users edit the key manually
+                        readOnly
                         style={{ backgroundColor: '#f0f0f0', opacity: 0.7 }}
                     />
                 </div>
