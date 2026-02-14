@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import useFundraiser from "../hooks/use-fundraiser";
 import DecryptionLoader from "../components/DecryptionLoader";
 import "./HomePage.css"; // Reusing the terminal grid and card styles
@@ -71,12 +71,26 @@ function FundraiserPage() {
               </span>
             </div>
             
+            {fundraiser.is_open && (
+              <div style={{ marginTop: '3rem' }}>
+                <Link 
+                  to={`/pledge/${id}`} 
+                  className="corporate-btn" 
+                  style={{ textDecoration: 'none', display: 'inline-block', textAlign: 'center' }}
+                >
+                  CONSOLIDATE_RESOURCES (PLEDGE)
+                </Link>
+                <p className="terminal-subtext" style={{ marginTop: '0.5rem' }}>
+                  AWAITING_INPUT: Authorized assets only.
+                </p>
+              </div>
+            )}
             <div className="progress-container" style={{ marginTop: '2rem' }}>
                 <div className="progress-label">ALLOCATION_CAPACITY: {progressPercent}%</div>
                 <div className="progress-bar" style={{ height: '15px' }}>
                     <div className="progress-fill" style={{ width: `${progressPercent}%` }}></div>
                 </div>
-            </div>
+              </div>
           </section>
 
           {/* Right Column: Ledger */}
