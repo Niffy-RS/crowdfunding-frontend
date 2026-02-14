@@ -3,14 +3,14 @@ async function postUser(username, password, first_name, last_name, email) {
     const response = await fetch(url, {
         method: "POST",
         headers: {
-        "Content-Type": "application/json",
+            "Content-Type": "application/json",
         },
         body: JSON.stringify({
             "username": username,
             "email": email,
             "password": password,
-            "first_name": first_Name, // Mapping your React variable to the backend key
-            "last_name": last_Name
+            "first_name": first_name, // Must match the argument name exactly
+            "last_name": last_name    // Must match the argument name exactly
         }),
     });
 

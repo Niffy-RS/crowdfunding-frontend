@@ -1,5 +1,6 @@
 import { useState } from "react"; 
 import { useNavigate, Link } from "react-router-dom";
+import useAuth from "../hooks/use-auth.js";
 import postUser from "../api/post-user.js";
 import "./Forms.css";
 
@@ -36,6 +37,11 @@ function SignupForm() {
     .then((response) => {
       window.localStorage.setItem("token", response.token);
       window.localStorage.setItem("user_id", response.user_id);
+
+      setAuth({
+        token: response.token,
+        user_id: response.user_id
+      });
       navigate(`/users/${response.user_id}`);
     })
     .catch((error) => {
