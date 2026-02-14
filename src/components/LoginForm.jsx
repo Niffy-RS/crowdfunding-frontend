@@ -32,6 +32,7 @@ function LoginForm() {
         window.localStorage.setItem("user_id", response.user_id);
         setAuth({
           token: response.token,
+          user_id: response.user_id
         });
         navigate(`/users/${response.user_id}`);
       }).catch(err => {

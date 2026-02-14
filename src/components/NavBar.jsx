@@ -7,7 +7,8 @@ function NavBar() {
 
   const handleLogout = () => {
     window.localStorage.removeItem("token");
-    setAuth({ token: null });
+    window.localStorage.removeItem("user_id");
+    setAuth({ token: null, user_id: null });
   };
 
   console.log(auth)
@@ -15,7 +16,6 @@ function NavBar() {
   return (
     <div className="navbar-container">
       <div className="crt-overlay"></div>
-
       <div className="navbar">
       <nav>
         <Link to="/">Terminal_Home</Link>
@@ -25,7 +25,9 @@ function NavBar() {
         )}
         {auth.token ? (
           <>
-          <Link to="/users">Dashboard</Link>
+            <Link to={`/users/${auth.user_id || window.localStorage.getItem("user_id")}`}>
+              Dashboard
+            </Link>
           <Link to="/fundraisers">Initiate</Link>
           <Link to="/pledges">Contribute</Link>
           <Link to="/" onClick={handleLogout} style={{color: 'var(--alert-red)'}}>
