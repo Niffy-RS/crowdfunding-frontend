@@ -4,13 +4,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import HomePage from "./pages/HomePage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
-import AboutPage from "./pages/AboutPage.jsx";
 import FundraiserPage from "./pages/FundraiserPage.jsx";
 import UserPage from "./pages/UserPage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
-
+import NewFundraiserPage from "./pages/NewFundraiserPage.jsx";
+import NewPledgePage from "./pages/NewPledgePage.jsx";
 import NavBar from "./components/NavBar.jsx";
 import { AuthProvider } from "./components/AuthProvider.jsx";
+import "./style.css"
 
 const router = createBrowserRouter([
   {
@@ -19,8 +20,9 @@ const router = createBrowserRouter([
       children: [
           { path: "/", element: <HomePage /> },
           { path: "/login", element: <LoginPage />},
-          { path: "/about", element: <AboutPage /> },
           { path: "/fundraiser/:id", element: <FundraiserPage /> },
+          { path: "newfundraiser", element: <NewFundraiserPage /> },
+          { path: "newpledge", element: <NewPledgePage /> },
           { path: "/user", element: <UserPage />},
           { path: "/signup", element: <SignupPage />},
       ],

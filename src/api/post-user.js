@@ -1,7 +1,7 @@
 async function postUser(username, password, first_name, last_name, email) {
-    const url = `${import.meta.env.VITE_API_URL}/users/`;
+    const url = `${import.meta.env.VITE_API_URL}/user/`;
     const response = await fetch(url, {
-      method: "POST",
+        method: "POST",
         headers: {
         "Content-Type": "application/json",
         },
