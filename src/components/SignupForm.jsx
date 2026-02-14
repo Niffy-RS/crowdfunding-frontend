@@ -1,11 +1,16 @@
-import { useState } from "react"; 
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import setAuth from "../hooks/use-auth.js";
+// 1. Correct the import to use the hook itself
+import useAuth from "../hooks/use-auth.js";
 import postUser from "../api/post-user.js";
 import "./Forms.css";
 
 function SignupForm() {
   const navigate = useNavigate();
+
+  // 2. INITIALIZE THE HOOK AT THE TOP LEVEL
+  // This extracts setAuth from your context correctly
+  const { setAuth } = useAuth();
 
   const [credentials, setCredentials] = useState({
     username: "",
@@ -28,32 +33,36 @@ function SignupForm() {
     const { username, password, first_name, last_name, email } = credentials;
 
     if (!username || !password || !first_name || !last_name || !email) {
-      // Maintaining the "tense" vibe by logging violations instead of just alerting
       console.warn("PROTOCOL_VIOLATION: Required fields absent.");
       return;
     }
 
     postUser(username, password, first_name, last_name, email)
-    .then((response) => {
-      window.localStorage.setItem("token", response.token);
-      window.localStorage.setItem("user_id", response.user_id);
+      .then((response) => {
+        // 3. STORAGE PROTOCOL
+        window.localStorage.setItem("token", response.token);
+        window.localStorage.setItem("user_id", response.user_id);
 
-      setAuth({
-        token: response.token,
-        user_id: response.user_id
+        // 4. UPDATE AUTH CONTEXT
+        // We use the setAuth we initialized at the top
+        setAuth({
+          token: response.token,
+          user_id: response.user_id
+        });
+
+        // 5. REDIRECT TO DASHBOARD
+        navigate(`/users/${response.user_id}`);
+      })
+      .catch((error) => {
+        console.error("Enrollment error:", error);
       });
-      navigate(`/users/${response.user_id}`);
-    })
-    .catch((error) => {
-      console.error("Enrollment error:", error);
-    });
   };
 
   return (
     <div className="document-container page-fade-in">
       <h2 className="form-title">Enrollment Application</h2>
       
-      <p className="terminal-subtext" style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+      <p className="terminal-subtext">
         Existing assets: <Link to="/login" style={{ color: 'var(--lumon-blue-light)' }}>RE-AUTHENTICATE</Link>
       </p>
 
@@ -110,7 +119,7 @@ function SignupForm() {
             className="form-input"
             type="email"
             id="email"
-            placeholder="USER@LUMON.COM"
+            placeholder="USER@CORPORATION.COM"
             onChange={handleChange}
           />
         </div>
@@ -120,7 +129,7 @@ function SignupForm() {
         </button>
       </form>
 
-      <div className="terminal-subtext" style={{ marginTop: '2rem', fontSize: '0.65rem' }}>
+      <div className="terminal-subtext">
         Disclaimer: By clicking submit, you acknowledge your intent to provide data refinement for the collective good.
       </div>
     </div>
