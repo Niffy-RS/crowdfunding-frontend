@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import NotFound from "./pages/404Page.jsx";
+
 import HomePage from "./pages/HomePage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import FundraiserPage from "./pages/FundraiserPage.jsx";
@@ -18,13 +20,14 @@ const router = createBrowserRouter([
       path: "/",
       element: <NavBar />,
       children: [
-          { path: "/", element: <HomePage /> },
-          { path: "/login", element: <LoginPage />},
-          { path: "/fundraiser/:id", element: <FundraiserPage /> },
-          { path: "newfundraiser", element: <NewFundraiserPage /> },
-          { path: "newpledge", element: <NewPledgePage /> },
-          { path: "/user", element: <UserPage />},
-          { path: "/signup", element: <SignupPage />},
+        { index: true, element: <HomePage /> },
+        { path: "login", element: <LoginPage />},
+        { path: "fundraisers/:id", element: <FundraiserPage /> },
+        { path: "fundraisers", element: <NewFundraiserPage /> },
+        { path: "pledges", element: <NewPledgePage /> },
+        { path: "users", element: <UserPage /> },
+        { path: "signup", element: <SignupPage /> },
+        { path: "*", element: <NotFound /> }
       ],
   },
 ]);

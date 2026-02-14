@@ -1,0 +1,40 @@
+.navbar {
+  background-color: var(--lumon-blue-dark);
+  padding: 0;
+  border-bottom: 2px solid var(--lumon-blue-light);
+}
+
+.navbar nav {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.navbar nav a {
+  color: var(--office-grey);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  padding: 1rem 2rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s steps(4);
+  /* "Jumpy" transition for retro feel */
+}
+
+.navbar nav a:hover {
+  background-color: var(--lumon-blue-light);
+  color: white;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+/* The "Logout" button should look like an Emergency Cut-off */
+.navbar nav a:last-child {
+  border-right: none;
+}
+
+.navbar nav a[href="/"]:first-child {
+  font-weight: bold;
+  color: #a3d8f4;
+  /* Glowy home logo color */
+}

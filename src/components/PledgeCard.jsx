@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "./src/style.css";
+import "./Cards.css"
 
 function PledgeCard(props) {
   const { pledgeData } = props;

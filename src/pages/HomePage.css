@@ -1,0 +1,78 @@
+/* 1. Page Header for the Directory */
+.directory-status {
+  border: 1px solid var(--lumon-blue-dark);
+  padding: 1.5rem;
+  margin-bottom: 3rem;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.directory-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--lumon-blue-light);
+  text-transform: uppercase;
+}
+
+/* 2. The Main Grid */
+#fundraiser-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  padding-bottom: 5rem;
+}
+
+/* 3. The Refined Card */
+.terminal-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  padding: 2rem;
+  position: relative;
+  transition: border-color 0.3s steps(3);
+}
+
+.terminal-card:hover {
+  border-color: var(--lumon-blue-dark);
+  box-shadow: 4px 4px 0px var(--lumon-blue-light);
+}
+
+.card-category {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  color: var(--office-grey);
+  border-bottom: 1px solid var(--office-grey);
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+/* 4. The Resource Deficit Section */
+.deficit-container {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border-color);
+}
+
+.deficit-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--alert-red);
+  font-weight: bold;
+}
+
+.deficit-amount {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.8rem;
+  color: var(--text-main);
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.deficit-amount::before {
+  content: "$";
+  font-size: 1rem;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+

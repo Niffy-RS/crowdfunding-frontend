@@ -13,22 +13,33 @@ function NavBar() {
   console.log(auth)
 
   return (
-    <div className="navbar">
+    <div className="navbar-container">
+      <div className="crt-overlay"></div>
+
+      <div className="navbar">
       <nav>
-        <Link to="/">Home</Link>
-        <Link to="/signup">Start Your TeamRazr</Link>
+        <Link to="/">Terminal_Home</Link>
+
+        {!auth.token && (
+        <Link to="/signup">Enrollment</Link>
+        )}
         {auth.token ? (
           <>
-          <Link to="/user">Dashboard</Link>
-          <Link to="/" onClick={handleLogout}>
-            Logout
+          <Link to="/users">Dashboard</Link>
+          <Link to="/fundraisers">Initiate</Link>
+          <Link to="/pledges">Contribute</Link>
+          <Link to="/" onClick={handleLogout} style={{color: 'var(--alert-red)'}}>
+            Sever_Connection
           </Link>
           </>
           ) : (
-          <Link to="/login">Login</Link> 
+          <Link to="/login">Authenticate</Link> 
         )}
       </nav>
-      <Outlet />
+      </div>
+      <main className="page-fade-in">
+        <Outlet />
+        </main>
     </div>
   );
 }

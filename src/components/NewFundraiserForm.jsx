@@ -1,86 +1,122 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import postFundraiser from "../api/post-fundraiser.js"
+import postFundraiser from "../api/post-fundraiser"; // Correct path check
+import "./Forms.css"
 
 function NewFundraiserForm() {
-const navigate = useNavigate();
+    const navigate = useNavigate();
 
-const [credentials, setCredentials] = useState({
-    title: "",
-    description: "",
-    goal: "",
-    image: "",
-});
+    const [credentials, setCredentials] = useState({
+        title: "",
+        description: "",
+        goal: "",
+        image: "",
+        acknowledgement: false,
+    });
 
-const handleChange = (event) => {
-    const { id, value } = event.target;
+    const handleChange = (event) => {
+        const { id, value, type, checked } = event.target;
         setCredentials((prevCredentials) => ({
-        ...prevCredentials,
-        [id]: value,
+            ...prevCredentials,
+            [id]: type === "checkbox" ? checked : value,
         }));
-};
+    };
 
-const handleSubmit = (event) => {
-    event.preventDefault();
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        // Validate protocol requirements
         if (credentials.title && credentials.description && credentials.goal && credentials.image) {
-            postProject(
-            credentials.title,
-            credentials.description, 
-            credentials.goal, 
-            credentials.image
-        ).then((response) => {
-            navigate("/user");
-        });
-    }
-};
+            postFundraiser(
+                credentials.title,
+                credentials.description,
+                credentials.goal,
+                credentials.image,
+                credentials.acknowledgement
+            ).then((response) => {
+                // Successful capture redirects to dashboard
+                navigate("/user");
+            }).catch((err) => {
+                console.error("DATA_ENTRY_FAILURE: Protocol not established.");
+            });
+        }
+    };
 
     return (
-        <form>
-            <div>
-                <label htmlFor="Title">Title:</label>              
-                <input
-                type="text"
-                id="title"
-                placeholder="Type your TeamRazr name"
-                onChange={handleChange}
-            />
-            </div>
+        <div className="document-container page-fade-in">
+            <h2 className="form-title">Initiate Resource Drive</h2>
 
-            <div>
-                <label htmlFor="description">Description:</label>
-                <input
-                type="description"
-                id="description"
-                placeholder="Type the TeamRazr description"
-                onChange={handleChange}
-            />
-            </div>
+            <form onSubmit={handleSubmit}>
+                <div className="form-section">
+                    <label className="form-label" htmlFor="title">Project Designation (Title):</label>
+                    <input
+                        className="form-input"
+                        type="text"
+                        id="title"
+                        placeholder="ENTER DESIGNATION..."
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
 
-            <div>
-                <label htmlFor="goal">Target Amount:</label>
-                <input
-                type="goal"
-                id="goal"
-                placeholder="$"
-                onChange={handleChange}
-            />
-            </div>
+                <div className="form-section">
+                    <label className="form-label" htmlFor="description">Operational Brief (Description):</label>
+                    <textarea
+                        className="form-input"
+                        id="description"
+                        rows="4"
+                        placeholder="PROVIDE OBJECTIVE DATA ONLY..."
+                        onChange={handleChange}
+                        required
+                    ></textarea>
+                </div>
 
-            <div>
-                <label htmlFor="image">Image:</label>
-                <input
-                type="text"
-                id="image"
-                placeholder="Project Image URL"
-                onChange={handleChange}
-            />
-            </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                    <div className="form-section">
+                        <label className="form-label" htmlFor="goal">Resource Target ($):</label>
+                        <input
+                            className="form-input"
+                            type="number"
+                            id="goal"
+                            placeholder="0.00"
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
 
-            <button type="submit" onClick={handleSubmit}>
-                Submit
-            </button>
-        </form>
+                    <div className="form-section">
+                        <label className="form-label" htmlFor="image">Asset URL (Image):</label>
+                        <input
+                            className="form-input"
+                            type="text"
+                            id="image"
+                            placeholder="HTTPS://..."
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                </div>
+
+                <div className="form-section">
+                    <input
+                        type="checkbox"
+                        id="acknowledgement"
+                        required
+                        onChange={handleChange}
+                    />
+                    <label className="form-label" htmlFor="acknowledgement">
+                        I acknowledge that this drive serves the collective interest of the corporation.
+                    </label>
+                </div>
+
+                <button className="corporate-btn" type="submit">
+                    COMMENCE INITIALISATION
+                </button>
+            </form>
+
+            <div className="terminal-subtext" style={{ marginTop: '1rem', textAlign: 'center' }}>
+                LMN_INTERNAL_DOC_REF: {Math.floor(Math.random() * 999)}-ALPHA
+            </div>
+        </div>
     );
 }
 

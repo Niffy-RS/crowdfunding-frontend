@@ -1,0 +1,26 @@
+/* Ensure the image doesn't look too "friendly" */
+.card-image-wrapper {
+  height: 150px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border-color);
+  background-color: var(--office-grey);
+}
+
+.card-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-title {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  color: var(--lumon-blue-dark);
+}
+
+/* Make the whole card feel like a single interactive unit */
+.terminal-card a {
+  display: block;
+  height: 100%;
+}

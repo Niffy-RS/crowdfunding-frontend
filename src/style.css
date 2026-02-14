@@ -1,30 +1,91 @@
-#fundraiser-list {
-  display: grid;
-  grid-template-columns: 30% 30% 30%;
-  column-gap: 10px;
-  row-gap: 10px;
+/* Lumon Corporate Palette */
+:root {
+  --lumon-blue-dark: #1a2a3a;
+  --lumon-blue-light: #4a6a8a;
+  --office-grey: #d1d5db;
+  --sterile-bg: #f0f2f5;
+  --text-main: #2c3e50;
+  --border-color: #bcc6cc;
+  --alert-red: #b22222;
 }
 
-.fundraiser-card {
-  width: 100%;
-  border: 1px solid black;
-  box-shadow: 0px 0px 5px gray;
+body {
+  background-color: var(--sterile-bg);
+  color: var(--text-main);
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+  overflow-x: hidden;
 }
 
-.fundraiser-card img {
+/* CRT Overlay - Visual Only */
+.crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 300px;
-  object-fit: cover;
+  height: 100%;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.05) 50%);
+  background-size: 100% 4px;
+  z-index: 9999;
+  pointer-events: none;
 }
 
-.pledge-card {
-  width: 100%;
-  border: 1px solid black;
-  box-shadow: 0px 0px 5px gray;
+/* Page Transitions */
+.page-fade-in {
+  animation: screenReveal 0.6s steps(20);
 }
 
-.pledge-card img {
+@keyframes screenReveal {
+  from {
+    opacity: 0;
+    transform: scaleY(0.01);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+/* Phosphor Logo */
+.lumon-logo {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: bold;
+  color: #a3d8f4;
+  text-shadow: 0 0 8px rgba(163, 216, 244, 0.6);
+  letter-spacing: 2px;
+  animation: flicker 4s infinite;
+}
+
+@keyframes flicker {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+
+  52% {
+    opacity: 1;
+  }
+}
+
+/* Buttons */
+.corporate-btn {
   width: 100%;
-  height: 300px;
-  object-fit: cover;
+  padding: 12px;
+  background-color: var(--lumon-blue-dark);
+  color: white;
+  border: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.corporate-btn:hover {
+  background-color: var(--lumon-blue-light);
 }
