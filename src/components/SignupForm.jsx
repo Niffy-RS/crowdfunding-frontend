@@ -35,7 +35,8 @@ function SignupForm() {
     postUser(username, password, first_name, last_name, email)
     .then((response) => {
       window.localStorage.setItem("token", response.token);
-      navigate("/users");
+      window.localStorage.setItem("user_id", response.user_id);
+      navigate(`/users/${response.user_id}`);
     })
     .catch((error) => {
       console.error("Enrollment error:", error);

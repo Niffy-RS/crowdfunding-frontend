@@ -29,10 +29,11 @@ function LoginForm() {
         credentials.password
       ).then((response) => {
         window.localStorage.setItem("token", response.token);
+        window.localStorage.setItem("user_id", response.user_id);
         setAuth({
           token: response.token,
         });
-        navigate("/users");
+        navigate(`/users/${response.user_id}`);
       }).catch(err => {
         // Optional: Trigger the 'screen-glitch' class on body here for "Critical Error" vibe
         console.error("Authentication protocol failed.");

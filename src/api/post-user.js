@@ -6,11 +6,11 @@ async function postUser(username, password, first_name, last_name, email) {
         "Content-Type": "application/json",
         },
         body: JSON.stringify({
-        "username": username,
-        "password": password,
-        "first_name": first_name,
-		"last_name": last_name,
-		"email": email
+            "username": username,
+            "email": email,
+            "password": password,
+            "first_name": first_Name, // Mapping your React variable to the backend key
+            "last_name": last_Name
         }),
     });
 
