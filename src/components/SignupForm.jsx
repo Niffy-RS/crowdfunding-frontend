@@ -1,6 +1,6 @@
 import { useState } from "react"; 
 import { useNavigate, Link } from "react-router-dom";
-import useAuth from "../hooks/use-auth.js";
+import setAuth from "../hooks/use-auth.js";
 import postUser from "../api/post-user.js";
 import "./Forms.css";
 
