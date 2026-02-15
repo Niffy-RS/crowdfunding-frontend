@@ -1,5 +1,5 @@
 async function postFundraiser(title, description, goal, image, owner_username) {
-    const url = `${import.meta.env.VITE_API_URL}/fundraisers/`;
+    const url = `${import.meta.env.VITE_API_URL}/fundraisers`;
     const token = window.localStorage.getItem("token");
 
     // Convert goal to number if it's a string

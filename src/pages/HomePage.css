@@ -1,4 +1,4 @@
-/* 1. Page Header for the Directory */
+
 .directory-status {
   border: 1px solid var(--lumon-blue-dark);
   padding: 1.5rem;
@@ -16,7 +16,7 @@
   text-transform: uppercase;
 }
 
-/* 2. The Main Grid */
+
 #fundraiser-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -24,7 +24,7 @@
   padding-bottom: 5rem;
 }
 
-/* 3. The Refined Card */
+
 .terminal-card {
   background: #ffffff;
   border: 1px solid var(--border-color);
@@ -47,7 +47,7 @@
   margin-bottom: 1rem;
 }
 
-/* 4. The Resource Deficit Section */
+
 .deficit-container {
   margin-top: 2rem;
   padding-top: 1rem;
@@ -76,3 +76,64 @@
   margin-right: 4px;
 }
 
+
+.progress-container {
+  margin: 1.5rem 0;
+}
+
+.progress-label {
+  font-size: 0.75rem;
+  font-family: 'IBM Plex Mono', monospace;
+  margin-bottom: 5px;
+  color: var(--lumon-blue-dark);
+}
+
+.progress-bar {
+  background-color: var(--office-grey);
+  height: 12px;
+  width: 100%;
+  border-radius: 2px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.progress-fill {
+  background-color: var(--lumon-blue);
+  height: 100%;
+  transition: width 0.4s ease-in-out;
+}
+
+
+.ledger-row {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--border-color);
+  font-size: 0.85rem;
+}
+
+.ledger-scroll {
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+
+.fundraiser-card {
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid var(--office-grey);
+  padding: 10px;
+  background: white;
+  transition: box-shadow 0.2s;
+}
+
+.fundraiser-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.fundraiser-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}

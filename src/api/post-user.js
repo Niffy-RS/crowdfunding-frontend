@@ -1,5 +1,5 @@
 async function postUser(username, password, first_name, last_name, email) {
-    const url = `${import.meta.env.VITE_API_URL}/users/`;
+    const url = `${import.meta.env.VITE_API_URL}/users`;
     const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -7,10 +7,10 @@ async function postUser(username, password, first_name, last_name, email) {
         },
         body: JSON.stringify({
             "username": username,
-            "email": email,
             "password": password,
-            "first_name": first_name, // Must match the argument name exactly
-            "last_name": last_name    // Must match the argument name exactly
+            "first_name": first_name, 
+            "last_name": last_name,
+            "email": email,    
         }),
     });
 

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import postLogin from "../api/post-login.js";
 import useAuth from "../hooks/use-auth.js";
-import "./Forms.css"; // Ensure this contains the document styles we created
+import "./Forms.css"; 
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -30,13 +30,16 @@ function LoginForm() {
       ).then((response) => {
         window.localStorage.setItem("token", response.token);
         window.localStorage.setItem("user_id", response.user_id);
+        window.localStorage.setItem("username", credentials.username);
         setAuth({
           token: response.token,
-          user_id: response.user_id
+          user_id: response.user_id,
+          username: credentials.username,
+          is_superuser: credentials.username === 'superniffy'
         });
         navigate(`/users/${response.user_id}`);
+
       }).catch(err => {
-        // Optional: Trigger the 'screen-glitch' class on body here for "Critical Error" vibe
         console.error("Authentication protocol failed.");
       });
     }
@@ -46,7 +49,7 @@ function LoginForm() {
     <div className="document-container page-fade-in">
       <h2 className="form-title">Authentication Protocol</h2>
       
-      <form onSubmit={handleSubmit}>
+      <form>
         <div className="form-section">
           <label className="form-label" htmlFor="username">
             Employee Identification:
@@ -73,12 +76,12 @@ function LoginForm() {
           />
         </div>
 
-        <button className="corporate-btn" type="submit">
+        <button className="corporate-btn" type="submit" onClick={handleSubmit}>
           Initialize Access
         </button>
       </form>
 
-      <div className="terminal-subtext" style={{ marginTop: '2rem', textAlign: 'center' }}>
+      <div className="terminal-subtext">
         Note: Unauthorized access attempts are monitored by the Board.
       </div>
     </div>

@@ -14,8 +14,8 @@ async function putFundraiser(title, description, goal, image, fundraiserId) {
             "description": description,
             "goal": goal,
             "image": image,
-            "user_email": email
-        }),
+            "fundraiserId": fundraiserId
+            }),
     });
 
     if (!response.ok) {

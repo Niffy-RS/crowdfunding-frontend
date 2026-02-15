@@ -29,8 +29,19 @@
 }
 
 /* The "Logout" button should look like an Emergency Cut-off */
-.navbar nav a:last-child {
+/* Specific styling for the Emergency Cut-off (Logout) */
+.navbar nav .logout-btn {
+  background-color: var(--lumon-blue-dark);
+  font-weight: bold;
+  color: var(--alert-red);
   border-right: none;
+  /* Usually the last item doesn't need a right border */
+}
+
+.navbar nav .logout-btn:hover {
+  background-color: var(--alert-red);
+  color: white;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
 }
 
 .navbar nav a[href="/"]:first-child {

@@ -1,30 +1,33 @@
 import { Link } from "react-router-dom";
 import DecryptionLoader from "./DecryptionLoader";
-import "./Cards.css" // Ensure this contains the styles we created
+import "./Cards.css" 
 
-function FundraiserCard(props) {
-  const { fundraiserData } = props;
-  const fundraiserLink = `/fundraisers/:id/${fundraiserData.id}`;
-
-  // Calculate the Resource Deficit
-  const deficit = fundraiserData.target - fundraiserData.current;
-  const progressPercent = Math.round((fundraiserData.current / fundraiserData.target) * 100);
+function FundraiserCard({fundraiserData}) {
+  const fundraiserLink = `fundraisers/${fundraiserData.id}`;
+  const totalRaised = fundraiserData.total_raised || 0;
+  const progressPercentage = fundraiserData.goal > 0
+    ? Math.min((totalRaised / fundraiserData.goal) * 100, 100)
+    : 0;
 
   return (
     <div className="terminal-card">
-      <Link to={fundraiserLink} style={{ textDecoration: 'none', color: 'inherit' }}>
-        {/* Corporate Image/File Preview */}
+      <Link to={fundraiserLink}>
         <div className="card-image-wrapper">
+          {fundraiserData.image &&(
           <img 
             src={fundraiserData.image} 
-            alt="Resource Preview" 
-            style={{ width: '100%', filter: 'grayscale(50%) brightness(90%)' }} 
+            alt={fundraiserData.title}
+            style={{ 
+              width: '100%', 
+              height: '200px',
+              objectFit: 'cover',
+              borderRadius: '4px',
+              marginBottom: '1rem',
+              filter: 'grayscale(50%) brightness(90%)' 
+            }} 
           />
+          )}
         </div>
-
-        <span className="card-category">
-          Subject: {fundraiserData.category || "GENERAL_ASSET"}
-        </span>
         
         <h3 className="card-title">
           <DecryptionLoader targetText={fundraiserData.title} />
@@ -32,24 +35,23 @@ function FundraiserCard(props) {
 
         <div className="progress-container">
           <div className="progress-label">
-            ALLOCATION_STATUS: {progressPercent}%
+            ALLOCATION_STATUS: {progressPercentage}%
           </div>
           <div className="progress-bar">
             <div 
               className="progress-fill" 
-              style={{ width: `${progressPercent}%` }}
+              style={{ width: `${progressPercentage}%` }}
             ></div>
           </div>
         </div>
 
         <div className="deficit-container">
-          <span className="deficit-label">RESOURCE_DEFICIT:</span>
-          <span className="deficit-amount">
-            {deficit > 0 ? deficit.toLocaleString() : "0.00"}
-          </span>
+          <div className="deficit-label">
+            <span>RESOURCE_TARGET: ${fundraiserData.goal.toLocaleString()} </span>
+        </div>
         </div>
 
-        <div className="corporate-btn" style={{ marginTop: '1.5rem', fontSize: '0.7rem' }}>
+        <div className="corporate-btn">
           ACCESS_RECORD
         </div>
       </Link>

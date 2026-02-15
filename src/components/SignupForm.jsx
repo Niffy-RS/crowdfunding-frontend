@@ -1,15 +1,11 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-// 1. Correct the import to use the hook itself
 import useAuth from "../hooks/use-auth.js";
 import postUser from "../api/post-user.js";
 import "./Forms.css";
 
 function SignupForm() {
   const navigate = useNavigate();
-
-  // 2. INITIALIZE THE HOOK AT THE TOP LEVEL
-  // This extracts setAuth from your context correctly
   const { setAuth } = useAuth();
 
   const [credentials, setCredentials] = useState({
@@ -30,31 +26,27 @@ function SignupForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log("form submitted")
     const { username, password, first_name, last_name, email } = credentials;
 
     if (!username || !password || !first_name || !last_name || !email) {
-      console.warn("PROTOCOL_VIOLATION: Required fields absent.");
+      alert("PROTOCOL_VIOLATION: Required fields absent.");
       return;
     }
 
     postUser(username, password, first_name, last_name, email)
       .then((response) => {
-        // 3. STORAGE PROTOCOL
         window.localStorage.setItem("token", response.token);
         window.localStorage.setItem("user_id", response.user_id);
-
-        // 4. UPDATE AUTH CONTEXT
-        // We use the setAuth we initialized at the top
         setAuth({
           token: response.token,
           user_id: response.user_id
         });
-
-        // 5. REDIRECT TO DASHBOARD
-        navigate(`/users/${response.user_id}`);
+        navigate(`users/${response.user_id}`);
       })
       .catch((error) => {
         console.error("Enrollment error:", error);
+        alert("AUTHORISATION_FAILED: resubmit request")
       });
   };
 
@@ -63,7 +55,7 @@ function SignupForm() {
       <h2 className="form-title">Enrollment Application</h2>
       
       <p className="terminal-subtext">
-        Existing assets: <Link to="/login" style={{ color: 'var(--lumon-blue-light)' }}>RE-AUTHENTICATE</Link>
+        Existing assets: <Link to="/login">RE-AUTHENTICATE</Link>
       </p>
 
       <form onSubmit={handleSubmit}>
@@ -89,7 +81,6 @@ function SignupForm() {
           />
         </div>
 
-        {/* Grouping Name fields for clinical organization */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
           <div className="form-section">
             <label className="form-label" htmlFor="first_name">Legal First Name</label>

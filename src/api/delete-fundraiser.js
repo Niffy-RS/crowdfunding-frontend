@@ -1,7 +1,7 @@
 async function deleteFundraiser(fundraiserId) {
     const token = window.localStorage.getItem("token");
     const email = window.localStorage.getItem("email");
-    const url = `${import.meta.env.VITE_API_URL}/fundraisers/${projectId}`;
+    const url = `${import.meta.env.VITE_API_URL}/fundraisers/${fundraiserId}`;
 
     try {
         const response = await fetch(url, {

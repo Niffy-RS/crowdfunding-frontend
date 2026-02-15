@@ -89,3 +89,17 @@ body {
 .corporate-btn:hover {
   background-color: var(--lumon-blue-light);
 }
+
+/* Responsive Grid Base */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+    /* PROJECT REQUIREMENT: Responsive Design */
+  }
+}

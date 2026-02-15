@@ -11,30 +11,26 @@ function NewFundraiserForm() {
         description: "",
         goal: "",
         image: "",
-        acknowledgement: false,
     });
 
     const handleChange = (event) => {
-        const { id, value, type, checked } = event.target;
+        const { id, value } = event.target;
         setCredentials((prevCredentials) => ({
             ...prevCredentials,
-            [id]: type === "checkbox" ? checked : value,
+            [id]: value,
         }));
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Validate protocol requirements
         if (credentials.title && credentials.description && credentials.goal && credentials.image) {
             postFundraiser(
                 credentials.title,
                 credentials.description,
                 credentials.goal,
                 credentials.image,
-                credentials.acknowledgement
             ).then((response) => {
                 const userId = auth.user_id || window.localStorage.getItem("user_id");
-                // Successful capture redirects to dashboard
                 navigate(`/users/${userId}`);
             }).catch((err) => {
                 console.error("DATA_ENTRY_FAILURE: Protocol not established.");
@@ -55,20 +51,17 @@ function NewFundraiserForm() {
                         id="title"
                         placeholder="ENTER DESIGNATION..."
                         onChange={handleChange}
-                        required
                     />
                 </div>
 
                 <div className="form-section">
                     <label className="form-label" htmlFor="description">Operational Brief (Description):</label>
-                    <textarea
+                    <input
                         className="form-input"
                         id="description"
-                        rows="4"
                         placeholder="PROVIDE OBJECTIVE DATA ONLY..."
                         onChange={handleChange}
-                        required
-                    ></textarea>
+                    ></input>
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
@@ -76,11 +69,10 @@ function NewFundraiserForm() {
                         <label className="form-label" htmlFor="goal">Resource Target ($):</label>
                         <input
                             className="form-input"
-                            type="number"
+                            type="goal"
                             id="goal"
                             placeholder="0.00"
                             onChange={handleChange}
-                            required
                         />
                     </div>
 
@@ -92,18 +84,11 @@ function NewFundraiserForm() {
                             id="image"
                             placeholder="HTTPS://..."
                             onChange={handleChange}
-                            required
                         />
                     </div>
                 </div>
 
-                <div className="form-section">
-                    <input
-                        type="checkbox"
-                        id="acknowledgement"
-                        required
-                        onChange={handleChange}
-                    />
+                <div>
                     <label className="form-label" htmlFor="acknowledgement">
                         I acknowledge that this drive serves the collective interest of the corporation.
                     </label>
@@ -114,8 +99,8 @@ function NewFundraiserForm() {
                 </button>
             </form>
 
-            <div className="terminal-subtext" style={{ marginTop: '1rem', textAlign: 'center' }}>
-                LMN_INTERNAL_DOC_REF: {Math.floor(Math.random() * 999)}-ALPHA
+            <div className="terminal-subtext">
+                TMRZR_INTERNAL_DOC_REF: {Math.floor(Math.random() * 999)}-ALPHA
             </div>
         </div>
     );

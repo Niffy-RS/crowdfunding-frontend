@@ -59,3 +59,63 @@
   background-color: #fff;
   border-color: var(--lumon-blue-light);
 }
+
+/* Inline Editing - Terminal Style */
+.inline-edit-input {
+  background: rgba(0, 123, 255, 0.05);
+  border: none;
+  border-bottom: 2px solid var(--lumon-blue);
+  color: var(--text-main);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.9rem;
+  width: 100%;
+  padding: 5px;
+  outline: none;
+}
+
+/* Corporate Buttons */
+.corporate-btn {
+  background-color: var(--lumon-blue);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-family: 'IBM Plex Mono', sans-serif;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.corporate-btn:hover {
+  background-color: var(--lumon-blue-dark);
+}
+
+.corporate-btn.small {
+  padding: 4px 8px;
+  font-size: 0.7rem;
+  margin-left: 5px;
+}
+
+/* PROJECT REQUIREMENT: UI Error Display */
+.non-compliance-box {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  padding: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+}
+
+.alert-icon {
+  background: #721c24;
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+}

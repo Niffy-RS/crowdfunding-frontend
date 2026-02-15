@@ -4,46 +4,41 @@ import useAuth from "../hooks/use-auth";
 import postPledge from "../api/post-pledge";
 import "./Forms.css";
 
-function NewPledgeForm() {
+function NewPledgeForm(props) {
     const navigate = useNavigate();
-    const { id } = useParams();
+    const { fundraiserId } = props;
     const { auth } = useAuth();
-
-    // 1. COMPLIANCE CHECK: Redirect if not logged in
+    const [credentials, setCredentials] = useState({
+        amount: "",
+        comment: "",
+        anonymous: false,
+        fundraiserId: fundraiserId
+    });
+    // Redirect if not logged in
     useEffect(() => {
         if (!auth.token && !window.localStorage.getItem("token")) {
             navigate("/login");
         }
     }, [auth, navigate]);
 
-    const [credentials, setCredentials] = useState({
-        amount: "",
-        comment: "",
-        anonymous: false,
-        fundraiser: id || ""
-    });
-
     const handleChange = (event) => {
-        const { id, value, type, checked } = event.target;
+        const { id, value } = event.target;
         setCredentials((prevCredentials) => ({
             ...prevCredentials,
-            [id]: type === "checkbox" ? checked : value,
+            [id]: value,
         }));
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
-        // Ensure amount is handled as a number for the backend
-        if (credentials.amount && credentials.fundraiser) {
+        if (credentials.amount && credentials.comment) {
             postPledge(
                 credentials.amount,
                 credentials.comment,
                 credentials.anonymous,
-                credentials.fundraiser
+                credentials.fundraiserId
             ).then(() => {
                 const userId = auth?.user_id || window.localStorage.getItem("user_id");
-                // Successful redirection to Personal Dashboard
                 navigate(`/users/${userId}`);
             }).catch((err) => {
                 console.error("ALLOCATION_FAILURE:", err);
@@ -56,8 +51,7 @@ function NewPledgeForm() {
         <div className="document-container page-fade-in">
             <h2 className="form-title">Asset Allocation Agreement</h2>
 
-            <form onSubmit={handleSubmit}>
-                {/* 2. THE MISSING INPUTS: Ensure these are visible */}
+            <form>
                 <div className="form-section">
                     <label className="form-label" htmlFor="amount">Relinquishment Amount ($):</label>
                     <input
@@ -66,18 +60,16 @@ function NewPledgeForm() {
                         id="amount"
                         placeholder="0.00"
                         onChange={handleChange}
-                        required
                     />
                 </div>
 
                 <div className="form-section">
                     <label className="form-label" htmlFor="comment">HR Approved Sentiment (Comment):</label>
-                    <textarea
+                    <input
                         className="form-input"
                         id="comment"
                         placeholder="PROVIDE OBJECTIVE DATA ONLY"
                         onChange={handleChange}
-                        required
                     />
                 </div>
 
@@ -87,7 +79,7 @@ function NewPledgeForm() {
                         id="anonymous"
                         onChange={handleChange}
                     />
-                    <label className="form-label" htmlFor="anonymous" style={{ marginLeft: "10px" }}>
+                    <label className="form-label" htmlFor="anonymous">
                         Mask Identity (Anonymous)
                     </label>
                 </div>
@@ -96,15 +88,14 @@ function NewPledgeForm() {
                     <label className="form-label" htmlFor="fundraiser">Designated Asset ID:</label>
                     <input
                         className="form-input"
-                        type="text"
+                        type="fundraiser"
                         id="fundraiser"
-                        value={credentials.fundraiser}
-                        readOnly
-                        style={{ backgroundColor: '#f0f0f0', opacity: 0.7 }}
+                        value={credentials.fundraiserId}
+                        onChange={handleChange}
                     />
                 </div>
 
-                <button className="corporate-btn" type="submit">
+                <button className="corporate-btn" type="submit" onClick={handleSubmit}>
                     CONFIRM TRANSFER
                 </button>
             </form>
